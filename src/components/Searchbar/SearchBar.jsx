@@ -1,50 +1,37 @@
 import { Component } from 'react';
-import axios from 'axios';
+import { toast } from 'react-toastify';
 export default class SearchBar extends Component {
   state = {
-    items: [],
-    loading: false,
-    erros: null,
-    page: 1,
+    searchImages: '',
   };
-  componentDidMount() {
-    this.fetchPosts();
-  }
-  fetchPosts() {
-    const { page } = this.state;
-    this.setState({ loading: true });
+  handleNameChange = e => {
+    this.setState({ searchImages: e.currentTarget.value.toLowerCase() });
+  };
 
-    axios
-      .get(
-        `https://pixabay.com/api/?q=cat&page=${page}&key=29222910-b478f7ced416d0dc238ac2c9c&image_type=photo&orientation=horizontal&per_page=12&`
-      )
-      .then(({ data }) => {
-        this.setState(({ items }) => {
-          return {
-            items: [...items, ...data],
-          };
-        });
-      })
-      .catch(error => {
-        this.setState({ error });
-      })
-      .finally(() => this.setState({ loading: false }));
-  }
+  handleSubmit = e => {
+    e.preventDefault();
+    if (this.state.searchImages.trim() === '') {
+      return toast('введите название фото');
+    }
+    this.props.onSubmit(this.state.searchImages);
+    this.setState({ searchImages: '' });
+  };
   render() {
-    // const { items, loading, error } = this.state;
     return (
-      <header class="searchbar">
-        <form class="form">
-          <button type="submit" class="button">
-            <span class="button-label">Search</span>
+      <header className="searchbar">
+        <form onSubmit={this.handleSubmit}>
+          <button type="submit" className="button">
+            <span className="button-label">Search</span>
           </button>
 
           <input
-            class="input"
+            className="input"
             type="text"
-            autocomplete="off"
-            autofocus
+            autoComplete="off"
+            autoFocus
             placeholder="Search images and photos"
+            value={this.state.searchImages}
+            onChange={this.handleNameChange}
           />
         </form>
       </header>
