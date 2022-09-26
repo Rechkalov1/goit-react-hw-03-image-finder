@@ -3,6 +3,10 @@ import { toast } from 'react-toastify';
 export default class SearchBar extends Component {
   state = {
     searchImages: '',
+    Images: [],
+    loading: false,
+    error: null,
+    page: 1,
   };
   handleNameChange = e => {
     this.setState({ searchImages: e.currentTarget.value.toLowerCase() });

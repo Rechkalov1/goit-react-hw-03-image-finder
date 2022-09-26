@@ -23,7 +23,10 @@ export default class ImageGallery extends Component {
   async fetchImages() {
     this.setState({ loading: true });
     try {
-      const result = await fetchRequest(this.props.searchName, this.state.page);
+      const result = await fetchRequest(
+        this.props.searchImages,
+        this.state.page
+      );
       const items = result.hits;
       this.setState(({ images }) => {
         return {
