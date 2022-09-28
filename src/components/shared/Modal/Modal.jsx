@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
-import { Overlay, Modals } from './Modal.styled';
+import { Overlay, Modals, ImgModal } from './Modal.styled';
 const modalRoot = document.getElementById('modal-root');
 
 export default class Modal extends Component {
@@ -20,7 +20,7 @@ export default class Modal extends Component {
     return createPortal(
       <Overlay onClick={this.closeModal}>
         <Modals>
-          <img src={imageUrlLarge} alt={imageTitle}></img>
+          <ImgModal src={imageUrlLarge} alt={imageTitle} />
         </Modals>
       </Overlay>,
       modalRoot

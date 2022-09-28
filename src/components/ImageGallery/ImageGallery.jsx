@@ -91,7 +91,7 @@ export default class ImageGallery extends Component {
     const isImages = Boolean(images.length);
     const { loadMore, closeModal, openModal } = this;
     return (
-      <>
+      <div>
         {error && <p>Try later.</p>}
         {loading && <Loader />}
         {isImages && <ImageList items={images} onClick={openModal} />}
@@ -99,7 +99,7 @@ export default class ImageGallery extends Component {
         {modalOpen && (
           <Modal onClose={closeModal} contents={this.state.modalContent} />
         )}
-      </>
+      </div>
     );
   }
 }
