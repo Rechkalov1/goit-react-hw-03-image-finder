@@ -16,11 +16,11 @@ export default class Modal extends Component {
     }
   };
   render() {
-    const { imageUrlLarge, imageTitle } = this.props.contents;
+    const { largeImageURL, imageTitle } = this.props.contents;
     return createPortal(
       <Overlay onClick={this.closeModal}>
         <Modals>
-          <ImgModal src={imageUrlLarge} alt={imageTitle} />
+          <ImgModal src={largeImageURL} alt={imageTitle} />
         </Modals>
       </Overlay>,
       modalRoot

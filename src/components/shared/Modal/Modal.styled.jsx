@@ -8,7 +8,6 @@ export const Overlay = styled.div`
   height: 100%;
   background-color: rgba(211, 211, 211, 0.5);
   align-items: center;
-  z-index: 99;
 `;
 export const Modals = styled.div`
   position: absolute;
@@ -18,10 +17,11 @@ export const Modals = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 10px;
   padding: 10px;
-  background-color: #fff;
 `;
 export const ImgModal = styled.img`
   display: block;
-  width: 100%;
+  width: 900px;
+  height: 700px;
   cursor: pointer;
+  border-radius: 10px;
 `;
