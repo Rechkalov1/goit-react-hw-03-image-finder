@@ -1,63 +1,72 @@
-import { Loader } from 'components/Loader/Loader';
 import { Component } from 'react';
-import fetchRequest from 'components/GalleryAPI/GalleyApi';
-import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { toast } from 'react-toastify';
+import { ImageList } from 'components/shared/ImageList/ImageList';
+import { Loader } from 'components/shared/Loader/Loader';
+import fetchRequest from 'components/services/FetchApi';
 
 export default class ImageGallery extends Component {
   state = {
     images: [],
     loading: false,
     error: null,
+    searchImages: '',
     page: 1,
   };
-
-  componentDidMount() {
-    this.fetchImages();
-  }
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
-    if (prevState.page !== page) {
-      this.fetchImages();
+    const { searchImages } = this.props;
+    if (page > prevState.page) {
+      this.fetchImages(searchImages, page);
+      return;
+    }
+    if (prevProps.searchImages !== searchImages && page === prevState.page) {
+      this.fetchImages(searchImages, 1);
+      this.setState({ page: 1 });
+      return;
     }
   }
-  async fetchImages() {
+  async fetchImages(currentName, currentPage) {
     this.setState({ loading: true });
     try {
-      const result = await fetchRequest(
-        this.props.searchImages,
-        this.state.page
-      );
+      const result = await fetchRequest(currentName, currentPage);
       const items = result.hits;
-      this.setState(({ images }) => {
-        return {
-          images: [...images, ...items],
-        };
-      });
+      if (items.length === 0) {
+        return toast.warn(
+          "We didn't find your request, please try again later"
+        );
+      }
+      if (currentPage === 1) {
+        this.setState(() => {
+          return {
+            images: [...items],
+          };
+        });
+      } else {
+        this.setState(({ images }) => {
+          return {
+            images: [...images, ...items],
+          };
+        });
+      }
     } catch (error) {
       this.setState({ error });
     } finally {
       this.setState({ loading: false });
     }
   }
-  loadMore = () => {
-    this.setState(({ page }) => {
-      return {
-        page: page + 1,
-      };
-    });
+  onSearch = ({ searchImages }) => {
+    this.setState({ searchImages });
   };
   render() {
-    const { images, loading, error } = this.state;
+    const { loading, error, images } = this.state;
     const isImages = Boolean(images.length);
-    const { loadMore } = this;
-    return (
-      <div>
-        {loading && <Loader />}
 
-        {isImages && <ImageGalleryItem images={images} />}
+    return (
+      <>
+        {loading && <Loader />}
         {error && <div>оШИБКА</div>}
-        {isImages && <button onClick={loadMore}>Load More</button>}
-      </div>
+        {isImages && <ImageList items={images} />}
+      </>
     );
   }
 }

@@ -1,21 +1,19 @@
 import { Component } from 'react';
-import { ToastContainer } from 'react-toastify';
-
 import ImageGallery from './ImageGallery/ImageGallery';
-import SearchBar from './Searchbar/SearchBar';
+import Searchbar from './Searchbar/Searchbar';
+
 export class App extends Component {
   state = {
     searchImages: '',
   };
-  handleImagesSubmit = searchImages => {
+  handleSubmitForm = searchImages => {
     this.setState({ searchImages });
   };
   render() {
     return (
       <div>
-        <SearchBar onSubmit={this.handleImagesSubmit} />
+        <Searchbar onSubmit={this.handleSubmitForm} />
         <ImageGallery searchImages={this.state.searchImages} />
-        <ToastContainer />
       </div>
     );
   }
