@@ -7,7 +7,6 @@ export const ImageList = ({ items }) => {
         key={item.id}
         imageURL={item.webformatURL}
         imageTitle={item.tags}
-        imageUrlLarge={item.largeImageURL}
       />
     ))}
   </ul>;
