@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { ImageList } from 'components/shared/ImageList/ImageList';
 import { Loader } from 'components/shared/Loader/Loader';
 import fetchRequest from 'components/services/FetchApi';
+import Modal from 'components/shared/Modal/Modal';
 
 export default class ImageGallery extends Component {
   state = {
@@ -11,6 +12,11 @@ export default class ImageGallery extends Component {
     error: null,
     searchImages: '',
     page: 1,
+    modalOpen: false,
+    modalContent: {
+      urlLarge: '',
+      title: '',
+    },
   };
   componentDidUpdate(prevProps, prevState) {
     const { page } = this.state;
@@ -57,15 +63,42 @@ export default class ImageGallery extends Component {
   onSearch = ({ searchImages }) => {
     this.setState({ searchImages });
   };
-  render() {
-    const { loading, error, images } = this.state;
-    const isImages = Boolean(images.length);
+  loadMore = () => {
+    this.setState(({ page }) => {
+      return {
+        page: page + 1,
+      };
+    });
+  };
+  openModal = modalContent => {
+    this.setState({
+      modalOpen: true,
+      modalContent,
+    });
+  };
 
+  closeModal = () => {
+    this.setState({
+      modalOpen: false,
+      modalContent: {
+        urlLarge: '',
+        title: '',
+      },
+    });
+  };
+  render() {
+    const { loading, images, modalOpen, error } = this.state;
+    const isImages = Boolean(images.length);
+    const { loadMore, closeModal, openModal } = this;
     return (
       <>
+        {error && <p>Try later.</p>}
         {loading && <Loader />}
-        {error && <div>оШИБКА</div>}
-        {isImages && <ImageList items={images} />}
+        {isImages && <ImageList items={images} onClick={openModal} />}
+        {isImages && <button onClick={loadMore}>loadMore</button>}
+        {modalOpen && (
+          <Modal onClose={closeModal} contents={this.state.modalContent} />
+        )}
       </>
     );
   }
