@@ -1,3 +1,5 @@
+import { Img } from './ImageGalleryItem.styled';
+
 export const ImageGalleryItem = ({
   imageURL,
   imageTitle,
@@ -11,7 +13,7 @@ export const ImageGalleryItem = ({
         onClick({ largeImageURL, imageTitle });
       }}
     >
-      <img src={imageURL} alt={imageTitle} />
+      <Img src={imageURL} alt={imageTitle} />
     </li>
   );
 };

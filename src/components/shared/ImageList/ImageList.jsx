@@ -1,9 +1,9 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-
+import { Ul } from './ImageList.styled';
 export const ImageList = ({ items, onClick }) => {
   return (
     <>
-      <ul className="gallery">
+      <Ul>
         {items.map(item => (
           <ImageGalleryItem
             key={item.id}
@@ -13,7 +13,7 @@ export const ImageList = ({ items, onClick }) => {
             onClick={onClick}
           />
         ))}
-      </ul>
+      </Ul>
       ;
     </>
   );

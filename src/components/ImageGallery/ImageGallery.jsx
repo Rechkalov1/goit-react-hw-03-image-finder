@@ -4,6 +4,7 @@ import { ImageList } from 'components/shared/ImageList/ImageList';
 import { Loader } from 'components/shared/Loader/Loader';
 import fetchRequest from 'components/services/FetchApi';
 import Modal from 'components/shared/Modal/Modal';
+import { Div, LoadMode } from './imageGallery.styled';
 
 export default class ImageGallery extends Component {
   state = {
@@ -93,9 +94,10 @@ export default class ImageGallery extends Component {
     return (
       <div>
         {error && <p>Try later.</p>}
-        {loading && <Loader />}
+        <Div> {loading && <Loader />}</Div>
+
         {isImages && <ImageList items={images} onClick={openModal} />}
-        {isImages && <button onClick={loadMore}>loadMore</button>}
+        {isImages && <LoadMode onClick={loadMore}>loadMore</LoadMode>}
         {modalOpen && (
           <Modal onClose={closeModal} contents={this.state.modalContent} />
         )}
