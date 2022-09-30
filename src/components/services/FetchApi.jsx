@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import axios from 'axios';
 const KEY = '29222910-b478f7ced416d0dc238ac2c9c';
 const URL = 'https://pixabay.com/api/';
@@ -9,3 +10,8 @@ const fetchRequest = async (searchName, page) => {
 };
 
 export default fetchRequest;
+
+fetchRequest.propTypes = {
+  searchName: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+};

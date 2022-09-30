@@ -61,9 +61,7 @@ export default class ImageGallery extends Component {
       this.setState({ loading: false });
     }
   }
-  onSearch = ({ searchImages }) => {
-    this.setState({ searchImages });
-  };
+
   loadMore = () => {
     this.setState(({ page }) => {
       return {
